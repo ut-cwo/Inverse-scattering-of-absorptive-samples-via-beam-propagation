@@ -1,1 +1,1 @@
-# Inverse-scattering-of-absorptive-samples-via-beam-propagation
+# Inverse scattering of absorptive samples via beam propagation
