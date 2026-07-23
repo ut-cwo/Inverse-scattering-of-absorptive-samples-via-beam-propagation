@@ -11,7 +11,7 @@ Inverse-scattering methods enable label-free, quantitative visualization of a sa
 
 The experimental dataset for running the code can be downloaded from the link below. This dataset contains angular scattering measurements (complex-field measurements) of absorptive microspheres, algae, succulent tissue section, and pigmented zebrafish embryo. Parameters of the angle-scanning imaging system and parameters used for MSBP-based inverse scattering are also included.
 
-**Download Link:** https://dataverse.tdl.org/dataverse/bpm_based_inverse-scattering-in-absorptive-samples
+[**Download Link**](https://dataverse.tdl.org/dataverse/bpm_based_inverse-scattering-in-absorptive-samples)
 
 # Running the code
 To run the complex-valued multi-slice beam propagation inverse-scattering code, please follow the steps outlined below:
