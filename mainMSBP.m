@@ -71,26 +71,28 @@
 %       placed directly in the same folder as mainMSBP.m will be added to
 %       the path and can be referenced locally.
 % 
+%
 %   2.  Set the 'p.dataPath' variable in [Block 1] to the location of 
 %       your data.
 %
-%       e.g. p.dataPath = 'D:\User\Data\ZebrafishEmbryo\' 
+%       e.g.    p.dataPath  = 'D:\User\Data\ZebrafishEmbryo\' 
 %                                   or
-%                       = 'ZebrafishEmbryo\sampleField_ZF_FOV1.mat' (Local)
+%                           = 'ZebrafishEmbryo\' (Local)
+%                           = '' (Local)
 %
 %
 %   3.  Set the 'p.sampName' variable in [Block 1] to the name of the 
 %       sample.
 %       
-%       e.g. p.sampPath = 'sampleField_ZF_FOV1.mat'
-%       
+%       e.g.    p.sampPath = 'sampleField_ZF_FOV1.mat'
+%
 %
 %   4.  Set the reconstruction parameters in [Block 2]. This can be done by 
 %       specifying a path to a parameter file or by leaving 'parFile' empty 
 %       and manually setting the variables. To load parameters from a file, 
 %       set the variable 'parFile' to its path.
 %
-%       e.g. parFile    = 'D:\User\Data\Zebrafish\parFile_ZF.mat' 
+%       e.g.    parFile = 'D:\User\Data\Zebrafish\parFile_ZF.mat' 
 %                                   or 
 %                       = 'parFile_ZF.mat' (Local)
 %
@@ -102,20 +104,24 @@
 %               r.useComplex = false; 
 %               etc.
 %
+%
 %   5.  Define the patch size and position for reconstrution in the FOV. In
 %       [Block 3], set 'p.patchFOV', 'p.xCent', and 'p.yCent' and run the 
 %       section. You will see a red box highlight the choosen patched 
 %       region. To change the position, change the values accordingly and
 %       rerun the section until you highlight the intended patch.
 %
+%
 %   6.  Run the section indicated by [Block 4]. This will input the data 
 %       ('p') and reconstruction ('r') parameters into the msbpHelper 
 %       function and run the multislice code. The function outputs the 
 %       updated structs as well as the reconstructed object.
 %
+%
 %   7.  To save the data, run the section indicated by [Block 5]. This will 
 %       create a new folder storing the reconstructed object, parameters, 
 %       metadata, and code files.
+%
 %
 %   Notes:  A visualization tool 'sliderDisplayImVC2' is included to easily
 %           view the 3D measurements and reconstructed object.
@@ -156,7 +162,9 @@ p.sampName  = '';
 
 %% Load in Data
 % Load in field measurements
+fprintf("Loading data from file '%s%s'...\n",p.dataPath, p.sampName)
 data        = loadData(p.dataPath, p.sampName);
+fprintf("Finished loading data.\n")
 
 % When loading external measurements, you may find it necessary to apply a 
 % data correction term to flip the phase of the field measurements. This 
@@ -198,8 +206,8 @@ parFile       = '';
 if ~isempty(parFile)
     load(parFile)
 else
-    %% Reconstruction Variables
-    r.rfDists   =[-5 0 5];% Refocus distances [um]
+    % Reconstruction Variables
+    r.rfDists   =[-5 0 5];  % Refocus distances [um]
                             % Define the number of defocus planes and the 
                             % amount of defocus
                             % e.g.  [-10 0 10] would be three defocus 
@@ -209,7 +217,7 @@ else
     r.O         = 200;      % Number of layers for reconstruction
     r.psz       = 6*p.ps;   % Size of axial layers
   
-    r.zPlane    = zPlane;   % Shift center plane of reconstruction volume
+    r.zPlane    = 0;        % Shift center plane of reconstruction volume
                             %       Positive values shift object up
                             %       Shifts by X number of planes
     
@@ -219,33 +227,37 @@ else
     r.OmitList  = [];       % List of measurements to remove (Dust, artefacts, etc.)
 
 
-    %% Padding
+    % Padding
     r.pdar      = 100;      % Padding size to avoid edge artifacts
                             %   Choice of padding is important:
                             %       large padding -> slow compute or OOM
                             %       small padding -> boundary artefacts
 
-    %% Init
+    % Init
     r.initGuess = [];       % Define a non-zero intial guess for the 
                             % reconstructed object.
 
-    %% Real- vs. Complex-valued Reconstruction
+
+    % Real- vs. Complex-valued Reconstruction
     r.useComplex    = true;
     % True:     Reconstruct complex-valued gradients.
     % False:    Reconstruct real-valued gradients.
     
-    %% Amplitude- vs. Field-based loss
+
+    % Amplitude- vs. Field-based loss
     r.useFieldLoss  = false;  
     % True:     Use field-based loss.
     % False:    Use amplitude-based loss.
     
-    %% Boundary Conditions
+
+    % Boundary Conditions
     r.positivityCon = true;
     % True:     Apply positivity to the Refractive Index reconstrucion.
     r.objMeanSub    = false;  
     % True:     Remove mean of first layer from object update during reconstruction.
     
-    %% Regularization Parameters
+
+    % Regularization Parameters
     r.regParamRe    = 10e-5;     % Regularization strength RI
     r.regParamIm    = 10e-5;     % Regularization strength Absorptivity
     % Regularization strength for real and imagnary (RI and Absorption)
@@ -257,37 +269,42 @@ else
     % True:     Uses an initial guess for the proximal TV regularization.
     %               Increases memory usage but speeds up reconstruction.
     
-    %% Accelerated Gradient Parameters
+
+    % Accelerated Gradient Parameters
     r.nesterov      = false;
     % True:     Use nesterov acceleration
     % False:    Use standard momentum
-    r.beta          = .999;      % Standard momentum strength
+    r.beta          = .99;      % Standard momentum strength
     r.accMom        = 10;       % Ramp up momentum gradually across accMom
                                 %   If cost starts to increase, momentum
                                 %   is reset and accMom grows.
     
-    %% Stopping Criterion
+
+    % Stopping Criterion
     r.earlyStop     = true;
     % True: Enable early stopping criterion for code under loss threshold
     r.lossThresh    = 1e-5; % Percent difference threshold for previous costs
     
-    %% Randomize Sequence of Gradients
+
+    % Randomize Sequence of Gradients
     r.randAngles    = false;  
     % True:     Use random sequence of angles during update.
     %               Random anglular sequencing may speed up convergence.
     % False:    Use sequential angulese during updates.
 
-    %% Visualization
+
+    % Visualization
     r.plotRange     = [-0.01,0.05]; % Colorbounds for progress update
     r.viewUpdates   = true;
     % True:     View reconstruction after each iteration
 
-    %% Save Paramater Struct as .mat
+    % Save Paramater Struct as .mat
     if ~exist([p.dataPath 'ParFiles/'],'dir')
         mkdir([p.dataPath 'ParFiles/'])
     end
     save([p.dataPath 'ParFiles/parFile.mat'],'r');
 end
+
 
 %% [Block 3] Define Patch FOV [Requires User Definitions]
 % Define the patch you want to reconstruct
@@ -315,7 +332,7 @@ hold off;
 
 p.measAcqs  = gpuArray(totFOV_acqs(rows,cols,:));
 
-%% Optimal patch FOV with padding
+%% Note: Optimal patch FOV with padding
 % To maximize speed of compute, choosing the correct size of computed
 % fields can make a big difference. As multi-slice beam propagation heavily 
 % relies on FFTs, running them inefficiently can greatly affect the compute 
