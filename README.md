@@ -19,26 +19,20 @@ To run the complex-valued multi-slice beam propagation inverse-scattering code, 
   2. To reconstruct the data found in the paper, download the data from the link provided in the        **Expiremental Dataset** section.
   3. mainMSBP.mat describes in detail how to run the code, please read the comments and run the         code block by block.
 
-<p align="center">
-<img src="Images/AlgaeFigure.jpg" width="700"/>
-</p>
-
-<p align="center">
-<strong> Figure 1: </strong> Experimental complex-valued reconstruction of <i>Micrasterias Radiata</i>
-</p>
-
-<p align="center">
-<img src="Images/SucculentFigure.jpg" width="500"/>
-</p>
-
-<p align="center">
-<strong> Figure 2: </strong> Experimental complex-valued reconstruction of Succulent section
-</p>
-
-<p align="center">
-<img src="Images/ZebrafishFigure.jpg" width="500"/>
-</p>
-
-<p align="center">
-<strong> Figure 3: </strong> Experimental complex-valued reconstruction of Zebrafish Embryo 48 hpf
-</p>
+# Expiremental Results
+<table align="center">
+  <tr>
+    <td align="center">
+      <img src="Images/AlgaeFigure.jpg" width="500"/><br/>
+      <strong>Figure 1:</strong> Experimental complex-valued reconstruction of <i>Micrasterias Radiata</i>
+    </td>
+    <td align="center">
+      <img src="ImageFolder/SucculentFigure.jpg" width="500"/><br/>
+      <strong>Figure 2:</strong> Experimental complex-valued reconstruction of Succulent section
+    </td>
+    <td align="center">
+      <img src="ImageFolder/ZebrafishFigure.jpg" width="500"/><br/>
+      <strong>Figure 3:</strong> Experimental complex-valued reconstruction of Zebrafish Embryo 48 hpf
+    </td>
+  </tr>
+</table>
