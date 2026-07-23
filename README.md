@@ -17,3 +17,4 @@ The experimental dataset for running the code can be downloaded from the link be
 To run the complex-valued multi-slice beam propagation inverse-scattering code, please follow the steps outlined below:
   1. Download/Clone the repository onto your local machine and unzip if necessary. You should see       a main file and a utils folder.
   2. To reconstruct the data found in the paper, download the data from the link provided in the        **Expiremental Dataset** section.
+  3. mainMSBP.mat describes in detail how to run the code, please read the comments and run the         code block by block.
