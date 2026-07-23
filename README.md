@@ -1,6 +1,6 @@
 # Inverse scattering of absorptive samples via beam propagation
 
-This repository contains the MATLAB reconstruction code for MSBP-based inverse-scattering to recover the sample's three-dimensional refractive index, as used in the following publication:
+This repository contains the MATLAB reconstruction code for MSBP-based inverse-scattering to recover the sample's three-dimensional complex-valued refractive index, as used in the following publication:
 
 **Wagenaar, Peter, et al. "Inverse-scattering of absorptive samples via beam propagation." bioRxiv (2026).**
 
@@ -12,3 +12,8 @@ Inverse-scattering methods enable label-free, quantitative visualization of a sa
 The experimental dataset for running the code can be downloaded from the link below. This dataset contains angular scattering measurements (complex-field measurements) of absorptive microspheres, algae, succulent tissue section, and pigmented zebrafish embryo. Parameters of the angle-scanning imaging system and parameters used for MSBP-based inverse scattering are also included.
 
 **Download Link:** https://dataverse.tdl.org/dataverse/bpm_based_inverse-scattering-in-absorptive-samples
+
+# Running the code
+To run the complex-valued multi-slice beam propagation inverse-scattering code, please follow the steps outlined below:
+  1. Download/Clone the repository onto your local machine and unzip if necessary. You should see       a main file and a utils folder.
+  2. To reconstruct the data found in the paper, download the data from the link provided in the        **Expiremental Dataset** section.
