@@ -23,9 +23,9 @@ To run the complex-valued multi-slice beam propagation inverse-scattering code, 
 <table align="center">
   <tr>
     <td align="center">
-      <img src="Images/AlgaeFigure.jpg" width="500"/><br/>
+      <img src="Images/AlgaeFigure.jpg" width="300"/><br/>
       <strong>Figure 1:</strong> Experimental complex-valued reconstruction of <i>Micrasterias Radiata</i>
-      <img src="Images/SucculentFigure.jpg" width="500"/><br/>
+      <img src="Images/SucculentFigure.jpg" width="300"/><br/>
       <strong>Figure 2:</strong> Experimental complex-valued reconstruction of Succulent section
     </td>
     <td align="center">
