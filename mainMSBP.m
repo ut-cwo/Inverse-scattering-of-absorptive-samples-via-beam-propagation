@@ -1,23 +1,25 @@
 %% Main reconstruction code
-% Main script for running MSBP on measured field data for complex RI 
-% reconstructions. Field measurements can be used with either an amplitude- 
-% or field-based loss function. For this work, we use digitally
-% defocused amplitude measurements from field data for the optimization to 
-% move away from field-based loss due to artefacts we observe when using 
+% Main script for running MSBP with measured field data for complex-valued
+% RI reconstructions. For this work, we use field measurements to create
+% computational defocused amplitude measurements. This is done instead of 
+% using plain field loss to counteract artefacts we observe when using 
 % field data in thick samples [1,3].
 %
 % This code is a reworked version of [2-3] implementing the necessary 
-% changes for absorption based reconstruction. Notable changes to the 
-% orignal code structure were also made to improve reconstructions speeds. 
-% This code utilizes regularization using a 3D total variation (TV) 
-% proximal operator. We gratefully acknowledge the work done by Beck and 
-% Teboulle [4] for the derivation of proximal tv in 3D. The proximal TV 
+% changes for absorption based reconstruction. In addition, notable changes
+% to the orignal code were also made to improve reconstructions speeds. 
+% 
+% Finally, this code incorporates regularization using a 3D total variation
+% (TV) proximal operator. We gratefully acknowledge the work done by Beck 
+% and Teboulle [4] for the derivation of proximal tv in 3D. The proximal TV 
 % code [4] used in previous works [2,3] was modified for compute speed 
 % purposes by adding a warm start capability and other small adjustments.
 %
 % If using this code, please cite [1].
 %
-% Author: Peter Wagenaar, Jeongsoo Kim, Shwetadwip Chowdhury; July 22, 2026
+%
+% Authors: 
+%   Peter Wagenaar, Jeongsoo Kim, Shwetadwip Chowdhury; July 22, 2026
 %
 % References for MSBP:
 % [1]   Wagenaar, Peter, et al. "Inverse-scattering of absorptive samples 
@@ -37,73 +39,83 @@
 %       18(11):2419--2434, 2009
 %
 % Acknowledgements:
-% Thank you to Michael Chen and David Ren for preliminary versions of this
-% code.
+%   Thank you to Michael Chen and David Ren for preliminary versions of this
+%   code.
 
-%% Instructions
-% In windows, MATLAB can be run block by block using ctrl + enter or the
-% run and advance button in the 'SECTION' tab under 'EDITOR'
+%% Instructions for the User
+% In windows, MATLAB can be run section by section with "ctrl + enter" 
+% while the cursor is in the corresponging section. These sections are 
+% defined between instances of '%%'. They can also be run using the
+% "Run and Advance" button in the 'SECTION' tab under 'EDITOR'.
 %
-% This code has been developed exclusivley with gpu computing in mind. 
+% This code has been developed exclusivley with GPU computing in mind. 
 % Hence, a GPU and the Parallel Computing Toolbox are required to run this
 % code. You can download the toolbox by going to the 'HOME' tab and
 % selecting 'Add-Ons'. Once there, search for 'Parallel Computing Toolbox'
 % and install.
 %
-% To prepare the code, first follow the steps below:
-%   1.  Download the data from the Texas Data Repository and move the code
-%       to a new folder. MATLAB will run within this folder and all
-%       references will reference this path or a fullfile path.
-%       Code structure should be as below:
+% Confirm the code has been dowloaded correctly by matching the following
+% folder structure:
 %           ...\Utils\
-%               ...\Utils_IO
-%               ...\Utils_vis
-%               ...\Utils_reg
-%               ...\Utils_recon
-%               ...\Utils_ffts
+%                   \Utils_IO
+%                   \Utils_recon
+%                   \Utils_reg
+%                   \Utils_vis
 %           ...\mainMSBP.m
-%           ...\msbpHelper.m
+%
+% Next, to prepare to run this code, please follow the steps below: 
+%
+%   1.  Download the expiremental data from the Texas Data Repository link 
+%       found in the GitHub repository README. This can be placed anywhere
+%       on your system as long as the full path is referenced. Anything
+%       placed directly in the same folder as mainMSBP.m will be added to
+%       the path and can be referenced locally.
 % 
-%   2.  Next, set the 'p.dataPath' variable in [Block 1] to the location of 
+%   2.  Set the 'p.dataPath' variable in [Block 1] to the location of 
 %       your data.
-%           e.g.    p.dataPath = 'D:\User\Data\Zebrafish\' or 'Zebrafish' 
-%                   if the folder is located on the MATLAB path
-%       This does not need to be in the same location as the code as long
-%       as you reference the full path.
 %
-%   3.  [Block 1] also has the reference to the sample name. Set p.sampName
-%       to the name of the path of the field measurements.
-%           e.g.    p.sampPath = 'sample_fields_FOV1.mat'
+%       e.g. p.dataPath = 'D:\User\Data\ZebrafishEmbryo\' 
+%                                   or
+%                       = 'ZebrafishEmbryo\sampleField_ZF_FOV1.mat' (Local)
+%
+%
+%   3.  Set the 'p.sampName' variable in [Block 1] to the name of the 
+%       sample.
 %       
-%   4.  Next, set the reconstruction parameters. This can be done by 
-%       loading the accompanying 'parFile.mat' or by manually setting the
-%       variables. To load parameters from the 'parFile', just set the path
-%       of the parFile variable in [Block 2] to the associated
-%       'parFile.mat'
-%           e.g.    parFile = 'D:\User\Data\Zebrafish\parFile_ZF.mat' or 
-%                   'parFile_ZF.mat' if the folder is located on the MATLAB 
-%                   path
-%       This does not need to be in the same location as the code as long
-%       as you reference the full path.
+%       e.g. p.sampPath = 'sampleField_ZF_FOV1.mat'
+%       
 %
-%       To manually set the variables, change the values of the
-%       corresponding value in r.
-%           e.g.    r.O = 200; r.useComplex = false; etc.
+%   4.  Set the reconstruction parameters in [Block 2]. This can be done by 
+%       specifying a path to a parameter file or by leaving 'parFile' empty 
+%       and manually setting the variables. To load parameters from a file, 
+%       set the variable 'parFile' to its path.
 %
-%   5.  Next, define the patch size and position for reconstrution. In
-%       [Block 3], set 'p.patchFOV', 'p.xCent', and 'p.yCent' such that the
-%       region of interest is highlighted by the red box in the image.
-%       Values can be tuned in this box and checked by continously
-%       rerunning the same block.
+%       e.g. parFile    = 'D:\User\Data\Zebrafish\parFile_ZF.mat' 
+%                                   or 
+%                       = 'parFile_ZF.mat' (Local)
 %
-%   6.  Finally, run the msbpHelper function in [Block 4]. This will read
-%       the data ('p') and reconstruction ('r') parameters and run the
-%       multislice code. The function outputs the updated structs as well
-%       as the reconstructed object.
+%       To manually set the variables, set 'parFile' to be empty and change 
+%       values in struct r.
+%           
+%       e.g.    parFile = '';
+%               r.O = 200; 
+%               r.useComplex = false; 
+%               etc.
 %
-%   7. To save the data, run [Block 5]. This will create a new folder
-%       storing the reconstructed object, parameters, metadata, and code
-%       files following [Block 5].
+%   5.  Define the patch size and position for reconstrution in the FOV. In
+%       [Block 3], set 'p.patchFOV', 'p.xCent', and 'p.yCent' and run the 
+%       section. You will see a red box highlight the choosen patched 
+%       region. To change the position, change the values accordingly and
+%       rerun the section until you highlight the intended patch.
+%
+%   6.  Run the section indicated by [Block 4]. This will input the data 
+%       ('p') and reconstruction ('r') parameters into the msbpHelper 
+%       function and run the multislice code. The function outputs the 
+%       updated structs as well as the reconstructed object.
+%
+%   7.  To save the data, run the section indicated by [Block 5]. This will 
+%       create a new folder storing the reconstructed object, parameters, 
+%       metadata, and code files.
 %
 %   Notes:  A visualization tool 'sliderDisplayImVC2' is included to easily
 %           view the 3D measurements and reconstructed object.
