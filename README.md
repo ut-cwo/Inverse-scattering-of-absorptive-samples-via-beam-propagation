@@ -21,7 +21,7 @@ To run the complex-valued multi-slice beam propagation inverse-scattering code, 
 
 
 <p align="center">
-<img src="Images/AlgaeFigure.jpg" width="700"/>
+<img src="Images/AlgaeFigure.png" width="700"/>
 </p>
 
 <p align="center">
@@ -29,7 +29,7 @@ To run the complex-valued multi-slice beam propagation inverse-scattering code, 
 </p>
 
 <p align="center">
-<img src="Images/SucculentFigure.jpg" width="500"/>
+<img src="Images/SucculentFigure.png" width="500"/>
 </p>
 
 <p align="center">
@@ -37,7 +37,7 @@ To run the complex-valued multi-slice beam propagation inverse-scattering code, 
 </p>
 
 <p align="center">
-<img src="Images/ZebrafishFigure.jpg" width="500"/>
+<img src="Images/ZebrafishFigure.png" width="500"/>
 </p>
 
 <p align="center">
