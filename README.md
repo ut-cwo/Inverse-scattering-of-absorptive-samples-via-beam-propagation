@@ -9,15 +9,13 @@ Inverse-scattering methods enable label-free, quantitative visualization of a sa
 
 # Experimental dataset
 
-The experimental dataset for running the code can be downloaded from the link below. This dataset contains angular scattering measurements (complex-field measurements) of absorptive microspheres, algae, succulent tissue section, and pigmented zebrafish embryo. Parameters of the angle-scanning imaging system and parameters used for MSBP-based inverse scattering are also included.
-
-[**Download Link**](https://dataverse.tdl.org/dataverse/bpm_based_inverse-scattering-in-absorptive-samples)
+The experimental dataset for running the code can be downloaded from the the [Texas Data Repository](https://dataverse.tdl.org/dataverse/bpm_based_inverse-scattering-in-absorptive-samples). This dataset contains angular scattering measurements (complex-field measurements) of absorptive microspheres, algae, succulent tissue section, and pigmented zebrafish embryo 48 hours post fertilization (hpf). Parameters of the angle-scanning imaging system and parameters used for MSBP-based inverse scattering are also included.
 
 # Running the code
-To run the complex-valued multi-slice beam propagation inverse-scattering code, please follow the steps outlined below:
-  1. Download/Clone the repository onto your local machine and unzip if necessary. You should see       a main file and a utils folder.
-  2. To reconstruct the data found in the paper, download the data from the link provided in the        **Expiremental Dataset** section.
-  3. mainMSBP.mat describes in detail how to run the code, please read the comments and run the         code block by block.
+To run the complex-valued multi-slice beam propagation inverse-scattering code, follow the steps outlined below:
+  1. Download/Clone the repository onto your local machine and unzip if necessary. You should see a mainMSBP.mat file and a Utils folder.
+  2. To reconstruct the data found in the paper, download the data from the link provided in the **Expiremental Dataset** section.
+  3. Once open, mainMSBP.mat describes in detail how to run the code.
 
 # Expiremental Results
 <table align="center">
