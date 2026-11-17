@@ -7,11 +7,13 @@
 %                                         July 22, 2026 by Peter Wagenaar %
 %                                                                         %
 % References:                                                             %
-% [1]   Wagenaar, Peter, et al. "Inverse-scattering of absorptive samples %
-%       via beam propagation." bioRxiv (2026).                            %
+% [1]    Peter Wagenaar, Jeongsoo Kim, Mary E. Swartz,                    %
+%        Johann K. Eberhart, and Shwetadwip Chowdhury, "Inverse           %
+%        scattering of absorptive samples via beam propagation,"          %
+%        Optica 13, 1891-1902 (2026)                                      %
 %                                                                         %
 %       (Github Repository):                                              %
-%           https://github.com/ut-cwo/Inverse-scattering-in-biological-   %
+%           https://github.com/ut-cwo/Inverse-scattering-of-absorptive-   %
 %               samples-via-beam-propagation                              %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function [dx, dy, dz] = grad_3d(x)
