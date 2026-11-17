@@ -12,19 +12,21 @@
 %                                   July 25, 2020 by Shwetadwip Chowdhury %
 %                                                                         %
 % References:                                                             %
-% [1]   Wagenaar, Peter, et al. "Inverse-scattering of absorptive samples %
-%       via beam propagation." bioRxiv (2026).                            %
-%                                                                         %
-%       (Github Repository):                                              %
-%           https://github.com/ut-cwo/Inverse-scattering-in-biological-   %
-%               samples-via-beam-propagation                              %
-%                                                                         %
-%                                                                         %
-% [2]   Kim, Jeongsoo, et al. "Inverse-scattering in biological samples   %
-%       via beam-propagation." bioRxiv (2025).                            %
+% [1]    Peter Wagenaar, Jeongsoo Kim, Mary E. Swartz,                    %
+%        Johann K. Eberhart, and Shwetadwip Chowdhury, "Inverse           %
+%        scattering of absorptive samples via beam propagation,"          %
+%        Optica 13, 1891-1902 (2026)                                      %
 %                                                                         %
 %       (Github Repository):                                              %
 %           https://github.com/ut-cwo/Inverse-scattering-of-absorptive-   %
+%               samples-via-beam-propagation                              %
+%                                                                         %
+%                                                                         %
+% [2]   Jeongsoo Kim et al. "Inverse scattering in biological samples     %
+%       via beam propagation." Sci. Adv.12, eaec8678 (2026)               %
+%                                                                         %
+%       (Github Repository):                                              %
+%           https://github.com/ut-cwo/Inverse-scattering-in-biological-   %
 %               samples-via-beam-propagation                              %
 %                                                                         %
 %                                                                         %
