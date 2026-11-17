@@ -34,7 +34,7 @@
 %        Optica 13, 1891-1902 (2026)                                      %
 %                                                                         %
 %       (Github Repository):                                              %
-%           https://github.com/ut-cwo/Inverse-scattering-in-biological-   %
+%           https://github.com/ut-cwo/Inverse-scattering-of-absorptive-   %
 %               samples-via-beam-propagation                              %
 %                                                                         %
 %                                                                         %
@@ -42,7 +42,7 @@
 %       via beam propagation." Sci. Adv.12, eaec8678 (2026)               %
 %                                                                         %
 %       (Github Repository):                                              %
-%           https://github.com/ut-cwo/Inverse-scattering-of-absorptive-   %
+%           https://github.com/ut-cwo/Inverse-scattering-in-biological-   %
 %               samples-via-beam-propagation                              %
 %                                                                         %
 %                                                                         %
